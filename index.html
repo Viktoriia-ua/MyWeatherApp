@@ -26,41 +26,46 @@
     <div class="container">
       <h1>WheatherApp</h1>
       <form class="search-form" id="search-form">
-      <h2>
          <form id="city-form">
         <input type="text" id="city-input" placeholder="Type a city...">
         <input type="submit" value="Search">
-      </h2>
-      <h3 id = "city-name">
-        </h3>
-      </form>
+        </form>
+
+        <div class="row">
+
+
+
+          <div class="col-4">
+          
+        <p id = "city-name">
         <p id="current-date">
-        Today
-      </p>
-      <div class="row">
-    <div class="col">
-      <div class="emoji">
-       <i class="fa-solid fa-cloud fa-5x"></i>
-       </div>
-    </div>
-    <div class="col-5" id="temp">
-    </div>
-    <div class="col"> 
-    </div>
-  </div>
+        <p id="description">
+      
 </div>
-<P>
-<div class="container text-center">
-  <div class="week">
-  <div class="row">
-    <div class="col">MON<br /><i class="fa-solid fa-sun"></i><br />14°8°</div>
-    <div class="col">TUE<br /><i class="fa-solid fa-sun"></i><br />14°8°</div>
-    <div class="col">WED<br /><i class="fa-solid fa-sun"></i><br />14°8°</div>
-    <div class="col">THU<br /><i class="fa-solid fa-sun"></i><br />14°8°</div>
-    <div class="col">FRI<br /><i class="fa-solid fa-sun"></i><br />14°8°</div>
-  </div>
-  </div>
-  </P>
+        <div class="col-4">
+        </br>
+        <div class="emoji">
+         <img src="" alt="Clear" id="icon" class="float-left" />
+       </div>
+</div>
+
+
+       <div class="col-4">
+        <p id = "list">
+             <ul>
+                <li>Temperature: 
+                  <strong id="temp"></strong><span class="units"
+                    ><a href="#" id="celsius-link" class="active">°C</a> |
+                    <a href="#" id="fahrenheit-link">°F</a></span
+                  ></li>
+                <li>Humidity: <span id="humidity"></span>%</li>
+                <li>Wind: <span id="wind"></span> m/h</li>
+              </ul>
+              </p>
+        </div>
+
+
+</div>
       <script src="src/index.js"></script>
     </div>
 </br>
