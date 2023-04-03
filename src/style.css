@@ -60,3 +60,24 @@ ul {
   cursor: default;
   text-decoration: none;
 }
+
+.weather-forecast {
+  margin: 30px 15px 30px 120px;
+  text-align: center;
+  color: #00204a;
+  font-family: "Poppins", sans-serif;
+  font-size: large;
+  font-weight: bolder;
+}
+
+.weather-forecast-date {
+  font-size: 16px;
+}
+
+.weather-forecast-temperature-min {
+  opacity: 0.5;
+}
+
+.weather-forecast-temperatures {
+  font-size: 13px;
+}
