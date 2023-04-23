@@ -29,51 +29,64 @@ function currentDate() {
 let today = currentDate();
 document.getElementById("current-date").innerHTML = today;
 
-function formatDay(timestamp) {
-  let date = new Date(timestamp * 1000);
-  let day = date.getDay();
-  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-  return days[day];
-}
-
-function displayForecast(response) {
-  let forecast = response.data.daily;
+function displayForecast(cityName) {
+  let apiKey = "bbd9d0dee9c7371ea785d4c7f6f00b2e";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=metric`;
 
   let forecastElement = document.querySelector("#forecast");
 
-  let forecastHTML = `<div class="row">`;
-  forecast.forEach(function (forecastDay, index) {
-    if (index < 6) {
-      forecastHTML =
-        forecastHTML +
-        `
+  // Fetch the weather data
+  fetch(apiUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      let forecastData = data.list;
+
+      let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"].map(function (
+        dayName,
+        index
+      ) {
+        let today = new Date();
+        let day = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() + index + 1
+        );
+        return day;
+      });
+
+      let forecastHTML = `<div class="row">`;
+      days.forEach(function (day, index) {
+        let DayofWeekforecast = data.list[index];
+
+        let srcURL = `http://openweathermap.org/img/wn/${DayofWeekforecast.weather[0].icon}.png`;
+        let maxTemp = Math.round(DayofWeekforecast.main.temp_max);
+        let minTemp = Math.round(DayofWeekforecast.main.temp_min);
+
+        forecastHTML =
+          forecastHTML +
+          `
       <div class="col-2">
-        <div class="weather-forecast-date">${formatDay(forecastDay.dt)}</div>
-        <img
-          src="http://openweathermap.org/img/wn/${
-            forecastDay.weather[0].icon
-          }@2x.png"
-          alt=""
-          width="42"
-        />
-        <div class="weather-forecast-temperatures">
-          <span class="weather-forecast-temperature-max"> ${Math.round(
-            forecastDay.temp.max
-          )}° </span>
-          <span class="weather-forecast-temperature-min"> ${Math.round(
-            forecastDay.temp.min
-          )}° </span>
+        <div class="weather-forecast-date">${day.toLocaleDateString("en-US", {
+          weekday: "short",
+        })}
+          <img src="${srcURL}" alt="${
+            DayofWeekforecast.weather[0].description
+          }" width="50" />
+          <div class="weather-forecast-temperatures">
+            <span class="weather-forecast-temperature-max">${maxTemp}°</span>
+            <span class="weather-forecast-temperature-min">${minTemp}°</span>
+          </div>
         </div>
       </div>
-  `;
-    }
-  });
+    `;
+      });
 
-  forecastHTML = forecastHTML + `</div>`;
-  forecastElement.innerHTML = forecastHTML;
+      forecastHTML = forecastHTML + `</div>`;
+      forecastElement.innerHTML = forecastHTML;
+    });
 }
-
 function getForecast(coordinates) {
   console.log(coordinates);
   let apiKey = "bbd9d0dee9c7371ea785d4c7f6f00b2e";
@@ -119,6 +132,7 @@ function submitingTheForm(event) {
   event.preventDefault();
   let cityInput = document.querySelector("#city-input");
   search(cityInput.value);
+  displayForecast(cityInput.value);
 }
 
 function displayFahrenheitTemperature(event) {
@@ -151,4 +165,4 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 search("Odesa");
-displayForecast();
+displayForecast("Odesa");
